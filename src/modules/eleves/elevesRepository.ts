@@ -7,12 +7,12 @@ export const findAll = async () => {
 };
 
 export const search = async (query: string) => {
-    const likeQuery = `%${query}%`;
-    const [rows] = await client.query<RowDataPacket[]>(
-        "SELECT * FROM eleves WHERE prenom LIKE ? OR nom LIKE ?",
-        [likeQuery, likeQuery],
-    );
-    return rows;
+	const likeQuery = `%${query}%`;
+	const [rows] = await client.query<RowDataPacket[]>(
+		"SELECT * FROM eleves WHERE prenom LIKE ? OR nom LIKE ?",
+		[likeQuery, likeQuery],
+	);
+	return rows;
 };
 
 export const findById = async (id: string) => {
@@ -23,20 +23,62 @@ export const findById = async (id: string) => {
 	return rows[0] as RowDataPacket | undefined;
 };
 
-export const create = async (prenom: string, nom: string, email:string, mot_de_passe :string, age: number , poids_initial: number , taille: number , objectif: string, niveau: string) => {
-    const [result] = await client.query<ResultSetHeader>(
-        "INSERT INTO eleves (prenom, nom, email, mot_de_passe, age, poids_initial, taille, objectif, niveau) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [prenom, nom, email, mot_de_passe, age, poids_initial, taille, objectif, niveau],
-    );
-    return result.insertId;
+export const create = async (
+	prenom: string,
+	nom: string,
+	email: string,
+	mot_de_passe: string,
+	age: number,
+	poids_initial: number,
+	taille: number,
+	objectif: string,
+	niveau: string,
+) => {
+	const [result] = await client.query<ResultSetHeader>(
+		"INSERT INTO eleves (prenom, nom, email, mot_de_passe, age, poids_initial, taille, objectif, niveau) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		[
+			prenom,
+			nom,
+			email,
+			mot_de_passe,
+			age,
+			poids_initial,
+			taille,
+			objectif,
+			niveau,
+		],
+	);
+	return result.insertId;
 };
 
-export const update = async (id: string, prenom: string, nom: string, email:string, mot_de_passe :string, age: number , poids_initial: number , taille: number , objectif: string, niveau: string) => {
-    const [result] = await client.query<ResultSetHeader>(
-        "UPDATE eleves SET prenom = ?, nom = ?, email = ?, mot_de_passe = ?, age = ?, poids_initial = ?, taille = ?, objectif = ?, niveau = ? WHERE id_eleve = ?",
-        [prenom, nom, email, mot_de_passe, age, poids_initial, taille, objectif, niveau, id],
-    );
-    return result.affectedRows > 0;
+export const update = async (
+	id: string,
+	prenom: string,
+	nom: string,
+	email: string,
+	mot_de_passe: string,
+	age: number,
+	poids_initial: number,
+	taille: number,
+	objectif: string,
+	niveau: string,
+) => {
+	const [result] = await client.query<ResultSetHeader>(
+		"UPDATE eleves SET prenom = ?, nom = ?, email = ?, mot_de_passe = ?, age = ?, poids_initial = ?, taille = ?, objectif = ?, niveau = ? WHERE id_eleve = ?",
+		[
+			prenom,
+			nom,
+			email,
+			mot_de_passe,
+			age,
+			poids_initial,
+			taille,
+			objectif,
+			niveau,
+			id,
+		],
+	);
+	return result.affectedRows > 0;
 };
 
 export const destroy = async (id: string) => {

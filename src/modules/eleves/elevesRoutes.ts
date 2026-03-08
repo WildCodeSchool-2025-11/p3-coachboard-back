@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { create, destroy, getAll, getById, search, update } from "./elevesActions.js";
+import {
+	create,
+	destroy,
+	getAll,
+	getById,
+	search,
+	update,
+} from "./elevesActions.js";
 
 const router = Router();
 
