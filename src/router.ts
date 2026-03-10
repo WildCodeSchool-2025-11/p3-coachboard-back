@@ -7,6 +7,6 @@ const router = Router();
 
 router.use("/api/items", itemsRoutes);
 router.use("/api/eleves", elevesRoutes);
-router.use("api/coach", coachRoutes);
+router.use("/api/coach", coachRoutes);
 
 export default router;
