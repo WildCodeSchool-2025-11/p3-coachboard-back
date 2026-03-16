@@ -1,21 +1,6 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import client from "../../database/client.js";
 
-export const findAll = async () => {
-	const [rows] = await client.query<RowDataPacket[]>(
-		" SELECT * FROM SEANCES_EXERCICES",
-	);
-	return rows;
-};
-
-export const search = async (nom: string) => {
-	const [rows] = await client.query<RowDataPacket[]>(
-		" SELECT * FROM SEANCES_EXERCICES WHERE NAME LIKE ?",
-		[`%${nom}%`],
-	);
-	return rows;
-};
-
 export const findBySeance = async (id_seance: string) => {
 	const [rows] = await client.query<RowDataPacket[]>(
 		"SELECT * FROM SEANCES_EXERCICES WHERE ID_SEANCE = ? ORDER BY ORDRE ASC",
