@@ -1,11 +1,11 @@
 import { Router } from "express";
 import {
-    create,
-    destroy,
-    getAll,
-    getById,
-    search,
-    update,
+	create,
+	destroy,
+	getAll,
+	getById,
+	search,
+	update,
 } from "./programmesAction.js";
 
 const router = Router();
