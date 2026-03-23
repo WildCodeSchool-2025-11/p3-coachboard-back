@@ -30,7 +30,11 @@ export const checkLogin: RequestHandler = async (req, res, next) => {
 			return;
 		}
 
-		req.body.user = { ...user, role };
+		req.body.user = {
+			id: role === "coach" ? user.ID_COACH : user.ID_ELEVE,
+			email: user.EMAIL,
+			role,
+		};
 		next();
 	} catch (err) {
 		next(err);
