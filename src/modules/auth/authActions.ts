@@ -10,7 +10,7 @@ export const signin: RequestHandler = async (req, res, next) => {
 
 		const token = jwt.sign(
 			{
-				id: user.role === "coach" ? user.ID_COACH : user.ID_ELEVE,
+				id: user.id,
 				email: user.EMAIL,
 				role: user.role,
 			},
