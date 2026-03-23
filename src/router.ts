@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { verifyToken } from "./middlewares/authMiddleware.js";
 import authRoutes from "./modules/auth/authRoutes.js";
 import coachRoutes from "./modules/coach/coachRoutes.js";
 import elevesRoutes from "./modules/eleves/elevesRoutes.js";
@@ -12,13 +13,13 @@ import seancesExercicesRoutes from "./modules/seances_exercices/seances_exercice
 const router = Router();
 
 router.use("/api/items", itemsRoutes);
-router.use("/api/eleves-programmes", elevesProgrammesRoutes);
-router.use("/api/eleves", elevesRoutes);
-router.use("/api/coach", coachRoutes);
-router.use("/api/exercices", exercicesRoutes);
-router.use("/api/seances-exercices", seancesExercicesRoutes);
-router.use("/api/programmes", programmesRoutes);
-router.use("/api/seances", seancesRoutes);
+router.use("/api/eleves-programmes", verifyToken, elevesProgrammesRoutes);
+router.use("/api/eleves", verifyToken, elevesRoutes);
+router.use("/api/coach", verifyToken, coachRoutes);
+router.use("/api/exercices", verifyToken, exercicesRoutes);
+router.use("/api/seances-exercices", verifyToken, seancesExercicesRoutes);
+router.use("/api/programmes", verifyToken, programmesRoutes);
+router.use("/api/seances", verifyToken, seancesRoutes);
 router.use("/api/auth", authRoutes);
 
 export default router;
