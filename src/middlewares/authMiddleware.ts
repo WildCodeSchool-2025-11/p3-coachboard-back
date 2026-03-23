@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import type { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
 import * as authRepository from "../modules/auth/authRepository.js";
 
 export const checkLogin: RequestHandler = async (req, res, next) => {
@@ -33,5 +34,26 @@ export const checkLogin: RequestHandler = async (req, res, next) => {
 		next();
 	} catch (err) {
 		next(err);
+	}
+};
+
+export const verifyToken: RequestHandler = async (req, res, next) => {
+	try {
+		const authHeader = req.headers.authorization;
+
+		if (!authHeader) {
+			res.status(401).json({ message: "Token manquant" });
+			return;
+		}
+
+		const token = authHeader.split(" ")[1];
+
+		const secret = process.env.JWT_SECRET;
+		if (!secret) throw new Error("JWT_SECRET manquant");
+
+		jwt.verify(token, secret);
+		next();
+	} catch (_err) {
+		res.status(401).json({ message: "Token invalide ou expiré" });
 	}
 };
