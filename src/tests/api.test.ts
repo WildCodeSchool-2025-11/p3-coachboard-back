@@ -45,3 +45,33 @@ describe("GET /api/eleves", () => {
 		expect(Array.isArray(res.body)).toBe(true);
 	});
 });
+
+describe("POST /api/seances", () => {
+	it("crée une séance et retourne 201 avec un token valide", async () => {
+		const loginRes = await request(app)
+			.post("/api/auth/signin")
+			.send({ email: TEST_EMAIL, mot_de_passe: TEST_PASSWORD });
+
+		const token = loginRes.body.token;
+
+		// Récupère un programme existant dynamiquement
+		const progRes = await request(app)
+			.get("/api/programmes")
+			.set("Authorization", `Bearer ${token}`);
+
+		const idProgramme = progRes.body[0].ID_PROGRAMME;
+
+		const res = await request(app)
+			.post("/api/seances")
+			.set("Authorization", `Bearer ${token}`)
+			.send({
+				titre: "Séance test vitest",
+				jour: "Lundi",
+				ordre: 1,
+				id_programme: idProgramme,
+			});
+
+		expect(res.status).toBe(201);
+		expect(res.body).toHaveProperty("id");
+	});
+});
